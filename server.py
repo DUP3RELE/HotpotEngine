@@ -1,19 +1,28 @@
-from flask import Flask, jsonify, request
-from flask_cors import CORS, cross_origin
-from flask_sqlalchemy import SQLAlchemy
+from flask import Flask
+from models import db
+from flask_cors import CORS
+from routes.register import register_bp
+from routes.login import login_bp
 
-app = Flask(__name__)
-db = SQLAlchemy()
+def create_app():
+    app = Flask(__name__)
+    CORS(app, resources={r"/api/*": {"origins": "http://localhost:3000"}})
 
-# Konfiguracja CORS
-CORS(app, resources={r"/api/*": {"origins": "http://localhost:3000"}})
+    app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///hotpot.db'
+    app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
-@app.route('/static/data', methods=['POST', 'OPTIONS'])  # Dodaj 'OPTIONS' do obsługi preflight
-@cross_origin(origin='http://localhost:3000', headers=['Content-Type', 'Authorization'])  # Dekorator cross_origin
-def receive_data():
-    data = request.json
-    print(data)
-    return jsonify({"message": "Dane zostały otrzymane i przetworzone"}), 200
+    db.init_app(app)
+    
+    # Rejestruj blueprinty
+    app.register_blueprint(register_bp)
+    app.register_blueprint(login_bp)
 
+    return app
+
+
+# uwaga na produkcji na to!
 if __name__ == '__main__':
+    app = create_app()
+    with app.app_context():
+        db.create_all()
     app.run(debug=True)
