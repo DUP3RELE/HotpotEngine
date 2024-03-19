@@ -13,7 +13,6 @@ def create_app():
 
     db.init_app(app)
     
-    # Rejestruj blueprinty
     app.register_blueprint(register_bp)
     app.register_blueprint(login_bp)
 

@@ -10,7 +10,6 @@ def login():
     data = request.json
     user = User.query.filter_by(email=data.get('email')).first()
 
-    # Sprawdź, czy użytkownik istnieje i czy hasło jest poprawne
     if user and check_password_hash(user.password_hash, data.get('password')):
         return jsonify({'message': 'Login successful'}), 200
     else:
