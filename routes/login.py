@@ -14,6 +14,6 @@ def login():
 
     if user and check_password_hash(user.password_hash, data.get('password')):
         access_token = create_access_token(identity=user.id, expires_delta=timedelta(days=1))
-        return jsonify({'access_token': access_token, 'message': 'Login successful'}), 200
+        return jsonify({'access_token': access_token, 'user_id': user.id, 'message': 'Login successful'}), 200
     else:
         return jsonify({'message': 'Invalid username or password'}), 401
