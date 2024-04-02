@@ -5,6 +5,8 @@ from routes.register import register_bp
 from routes.login import login_bp
 from flask_jwt_extended import JWTManager
 from routes.protected import protected_bp
+from routes.employee import employee_bp
+
 
 def create_app():
     app = Flask(__name__)
@@ -21,6 +23,7 @@ def create_app():
     app.register_blueprint(register_bp)
     app.register_blueprint(login_bp)
     app.register_blueprint(protected_bp)
+    app.register_blueprint(employee_bp)
 
     return app
 
