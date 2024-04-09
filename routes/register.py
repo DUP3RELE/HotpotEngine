@@ -20,7 +20,7 @@ def register():
         return uuid.uuid4().hex
     
     new_restaurant = Restaurant(restaurantname=restaurantname, email=email)
-    new_restaurant.set_password(password)
+    new_restaurant.password_hash = generate_password_hash(password)
     new_restaurant.restaurant_id = generate_restaurant_id()
 
     db.session.add(new_restaurant)

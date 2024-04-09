@@ -8,7 +8,6 @@ employee_bp = Blueprint('employee_bp', __name__, url_prefix='/api')
 @jwt_required()
 def create_employee():
     restaurant_id = get_jwt_identity()
-
     data = request.get_json()
     login = data.get('login')
     password = data.get('password')
