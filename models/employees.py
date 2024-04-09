@@ -1,3 +1,4 @@
+from . import db
 from flask_sqlalchemy import SQLAlchemy
 from werkzeug.security import generate_password_hash, check_password_hash
 
@@ -21,5 +22,3 @@ class Employee(db.Model):
 
     def check_password(self, password):
         return check_password_hash(self.password_hash, password)
-    
-    # Zakładamy, że model Restaurant jest już zdefiniowany

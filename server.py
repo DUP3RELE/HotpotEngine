@@ -5,7 +5,7 @@ from routes.register import register_bp
 from routes.login import login_bp
 from flask_jwt_extended import JWTManager
 from routes.protected import protected_bp
-from routes.employee import employee_bp
+from routes.create_employee import employee_bp
 
 
 def create_app():
@@ -32,5 +32,6 @@ def create_app():
 if __name__ == '__main__':
     app = create_app()
     with app.app_context():
+        db.drop_all()
         db.create_all()
     app.run(debug=True)
