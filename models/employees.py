@@ -1,17 +1,14 @@
 from . import db
-from flask_sqlalchemy import SQLAlchemy
 from werkzeug.security import generate_password_hash, check_password_hash
 
-db = SQLAlchemy()
-
 class Employee(db.Model):
+    __tablename__ = 'employees'
     employee_id = db.Column(db.Integer, primary_key=True)
     login = db.Column(db.String(80), unique=True, nullable=False)
     password_hash = db.Column(db.String(128), nullable=False)
     name = db.Column(db.String(100), nullable=False)
     position = db.Column(db.String(100), nullable=False)
-    restaurant_id = db.Column(db.Integer, db.ForeignKey('restaurant.id'), nullable=False)
-    restaurant = db.relationship('Restaurant', back_populates='employees')
+    restaurant_id = db.Column(db.Integer, db.ForeignKey('restaurants.id'), nullable=False)
 
     @property
     def password(self):

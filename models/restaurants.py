@@ -9,10 +9,10 @@ class Restaurant(db.Model):
     email = db.Column(db.String(120), unique=True, nullable=False)
     password_hash = db.Column(db.String(128))
 
+    employees = db.relationship('Employee', backref='restaurant', lazy=True)
+
     def set_password(self, password):
         self.password_hash = generate_password_hash(password)
 
     def check_password(self, password):
         return check_password_hash(self.password_hash, password)
-    
-    # employees = db.relationship('Employee', back_populates='restaurant', cascade='all, delete-orphan')

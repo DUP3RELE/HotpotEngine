@@ -20,7 +20,8 @@ def login():
     restaurant = Restaurant.query.filter_by(email=data.get('email')).first()
 
     if restaurant and check_password_hash(restaurant.password_hash, data.get('password')):
-        access_token = create_access_token(identity=restaurant.id, expires_delta=timedelta(days=1))
+        additional_claims = {"restaurant_id": restaurant.id}
+        access_token = create_access_token(identity=restaurant.id, additional_claims=additional_claims, expires_delta=timedelta(days=1))
         return jsonify({'access_token': access_token, 'restaurant_id': restaurant.id, 'message': 'Login successful'}), 200
     else:
         return jsonify({'message': 'Invalid email or password'}), 401
