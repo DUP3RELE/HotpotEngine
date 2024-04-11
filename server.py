@@ -10,7 +10,7 @@ from routes.create_employee import employee_bp
 
 def create_app():
     app = Flask(__name__)
-    CORS(app, resources={r"/api/*": {"origins": "http://localhost:3000"}})
+    CORS(app, resources={r"/api/*": {"origins": "http://localhost:3000", "methods": ["GET", "POST", "DELETE", "PUT"]}})
 
 
     app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///hotpot.db'
