@@ -15,8 +15,12 @@ def create_employee():
     name = data.get('name')
     position = data.get('position')
 
-    if not restaurant_id or Employee.query.filter_by(login=login).first():
-        return jsonify({'message': 'Niepoprawne dane lub pracownik o takim loginie już istnieje'}), 400
+    if not restaurant_id:
+        return jsonify({'message': 'Brak restaurant_id'}), 400
+
+    existing_employee = Employee.query.filter_by(login=login).first()
+    if existing_employee:
+        return jsonify({'message': 'Pracownik o takim loginie już istnieje'}), 400
 
     new_employee = Employee(
         restaurant_id=restaurant_id,
