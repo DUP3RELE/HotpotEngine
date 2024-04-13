@@ -6,6 +6,7 @@ from routes.login import login_bp
 from flask_jwt_extended import JWTManager
 from routes.protected import protected_bp
 from routes.create_employee import employee_bp
+from models import Employee
 
 
 def create_app():
@@ -25,6 +26,11 @@ def create_app():
     app.register_blueprint(protected_bp)
     app.register_blueprint(employee_bp)
 
+    @app.route('/debug/employees')
+    def debug_employees():
+        employees = Employee.query.all()
+        return jsonify([(emp.name, emp.position) for emp in employees])
+    
     return app
 
 
