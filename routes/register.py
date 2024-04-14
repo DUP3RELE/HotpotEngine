@@ -6,6 +6,7 @@ import uuid
 
 register_bp = Blueprint('register_bp', __name__, url_prefix='/api')
 
+
 @register_bp.route('/register', methods=['POST'])
 def register():
     data = request.json
@@ -18,7 +19,7 @@ def register():
 
     def generate_restaurant_id():
         return uuid.uuid4().hex
-    
+
     new_restaurant = Restaurant(restaurantname=restaurantname, email=email)
     new_restaurant.password_hash = generate_password_hash(password)
     new_restaurant.restaurant_id = generate_restaurant_id()
