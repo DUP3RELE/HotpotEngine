@@ -13,24 +13,18 @@ def create_app():
     app = Flask(__name__)
     CORS(app, resources={r"/api/*": {"origins": "http://localhost:3000", "methods": ["GET", "POST", "DELETE", "PUT"]}})
 
-
     app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///hotpot.db'
     app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
     app.config['JWT_SECRET_KEY'] = 'zX22fdgFh%553bVCrd1'
 
     jwt = JWTManager(app)
     db.init_app(app)
-    
+
     app.register_blueprint(register_bp)
     app.register_blueprint(login_bp)
     app.register_blueprint(protected_bp)
     app.register_blueprint(employee_bp)
 
-    @app.route('/debug/employees')
-    def debug_employees():
-        employees = Employee.query.all()
-        return jsonify([(emp.name, emp.position) for emp in employees])
-    
     return app
 
 
