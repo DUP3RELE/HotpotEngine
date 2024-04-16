@@ -5,6 +5,7 @@ from flask_jwt_extended import jwt_required
 
 employee_bp = Blueprint('employee_bp', __name__, url_prefix='/api')
 
+
 @employee_bp.route('/create_employee', methods=['POST'])
 @jwt_required()
 def create_employee():
@@ -35,6 +36,7 @@ def create_employee():
 
     return jsonify({'message': 'Pracownik został pomyślnie utworzony'}), 201
 
+
 @employee_bp.route('/get_employees', methods=['GET'])
 @jwt_required()
 def get_employees():
@@ -49,3 +51,30 @@ def get_employees():
     ]
 
     return jsonify(employees_list), 200
+
+
+@employee_bp.route('/edit_employee/<int:employee_id>', methods=['PUT'])
+@jwt_required()
+def edit_employee(employee_id):
+    data = request.get_json()
+    employee = Employee.query.get(employee_id)
+    if not employee:
+        return jsonify({'message': 'Pracownik nie istnieje'}), 404
+
+    employee.name = data.get('name', employee.name)
+    employee.position = data.get('position', employee.position)
+
+    db.session.commit()
+    return jsonify({'message': 'Pracownik został zaktualizowany'}), 200
+
+
+@employee_bp.route('/delete_employee/<int:employee_id>', methods=['DELETE'])
+@jwt_required()
+def delete_employee(employee_id):
+    employee = Employee.query.get(employee_id)
+    if not employee:
+        return jsonify({'message': 'Pracownik nie istnieje'}), 404
+
+    db.session.delete(employee)
+    db.session.commit()
+    return jsonify({'message': 'Pracownik został usunięty'}), 200
