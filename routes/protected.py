@@ -4,6 +4,7 @@ from models.restaurants import Restaurant
 
 protected_bp = Blueprint('protected_bp', __name__, url_prefix='/api')
 
+
 @protected_bp.route('/protected', methods=['GET'])
 @jwt_required()
 def get_protected():
