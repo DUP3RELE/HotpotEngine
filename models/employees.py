@@ -10,7 +10,7 @@ class Employee(db.Model):
     name = db.Column(db.String(100), nullable=False)
     position = db.Column(db.String(100), nullable=False)
     restaurant_id = db.Column(db.Integer, db.ForeignKey('restaurants.id'), nullable=False)
-    workHours = db.relationship('WorkHours', backref='employee')
+    # workHours = db.relationship('WorkHours', backref='employee')
 
     @property
     def password(self):

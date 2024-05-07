@@ -15,9 +15,15 @@ def login():
     password = data.get('password')
 
     if not email or not password:
-        return jsonify({'message': 'Email and password are required'}), 400
+        return jsonify({'message': 'Wpisz email i hasło'}), 400
 
     restaurant = Restaurant.query.filter_by(email=data.get('email')).first()
+
+    if restaurant is None:
+        return jsonify({'message': 'Nieprawidłowy adres E-mail'}), 401
+
+    if not check_password_hash(restaurant.password_hash, password):
+        return jsonify({'message': 'Niepoprawne hasło'}), 401
 
     if restaurant and check_password_hash(restaurant.password_hash, data.get('password')):
         additional_claims = {"restaurant_id": restaurant.id}

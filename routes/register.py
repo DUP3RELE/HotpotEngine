@@ -14,8 +14,11 @@ def register():
     email = data.get('email')
     password = data.get('password')
 
+    if not restaurantname or not email or not password:
+        return jsonify({'error': 'Uzupełnij Brakujące Pola'}), 400
+
     if Restaurant.query.filter_by(email=email).first():
-        return jsonify({'message': 'Email is already in use'}), 409
+        return jsonify({'error': 'Adres E-mail jest używany'}), 409
 
     def generate_restaurant_id():
         return uuid.uuid4().hex
@@ -27,4 +30,4 @@ def register():
     db.session.add(new_restaurant)
     db.session.commit()
 
-    return jsonify({'message': 'Restaurant has been registered successfully'}), 201
+    return jsonify({'message': 'Restauracja Zarejestrowana!'}), 201
