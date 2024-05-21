@@ -11,6 +11,7 @@ class Employee(db.Model):
     position = db.Column(db.String(100), nullable=False)
     restaurant_id = db.Column(db.Integer, db.ForeignKey('restaurants.id'), nullable=False)
     # workHours = db.relationship('WorkHours', backref='employee')
+    # recipies = db.relationship('Recipes', backref='employee', lazy=True)
 
     @property
     def password(self):
