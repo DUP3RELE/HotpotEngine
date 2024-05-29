@@ -49,7 +49,7 @@ def create_recipe():
     return jsonify({'message': 'Przepis został zapisany'}), 200
 
 
-@recipe_bp.route('/get_recipies', methods=['GET'])
+@recipe_bp.route('/get_recipes', methods=['GET'])
 @jwt_required()
 def get_recipes():
     restaurant_id = request.args.get('restaurant_id')
