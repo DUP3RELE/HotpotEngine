@@ -57,7 +57,7 @@ def get_recipes():
         return jsonify({'message': 'Brak ID restauracji w żądaniu'}), 400
 
     recipes = Recipes.query.filter_by(restaurant_id=restaurant_id).all()
-    recipes_list = [{'id': rec.recipe_id,
+    recipes_list = [{'id': rec.id,
                      'title': rec.title,
                      'content_ingredients': rec.content_ingredients,
                      'content_methods': rec.content_methods,
