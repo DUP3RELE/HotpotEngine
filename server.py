@@ -8,6 +8,7 @@ from routes.protected import protected_bp
 from routes.create_employee import employee_bp
 from routes.positions import position_bp
 from routes.recipes_route import recipe_bp
+from routes.employee_name import employee_name_bp
 
 
 def create_app():
@@ -24,6 +25,7 @@ def create_app():
     app.register_blueprint(register_bp)
     app.register_blueprint(login_bp)
     app.register_blueprint(protected_bp)
+    app.register_blueprint(employee_name_bp)
     app.register_blueprint(employee_bp)
     app.register_blueprint(position_bp)
     app.register_blueprint(recipe_bp)
