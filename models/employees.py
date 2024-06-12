@@ -10,8 +10,6 @@ class Employee(db.Model):
     name = db.Column(db.String(100), nullable=False)
     position = db.Column(db.String(100), nullable=False)
     restaurant_id = db.Column(db.Integer, db.ForeignKey('restaurants.id'), nullable=False)
-    # workHours = db.relationship('WorkHours', backref='employee')
-    # recipies = db.relationship('Recipes', backref='employee', lazy=True)
 
     @property
     def password(self):
@@ -23,3 +21,6 @@ class Employee(db.Model):
 
     def check_password(self, password):
         return check_password_hash(self.password_hash, password)
+
+    def __repr__(self):
+        return f'<Employee {self.name}>'
