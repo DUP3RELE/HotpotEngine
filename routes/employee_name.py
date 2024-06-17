@@ -14,4 +14,4 @@ def get_employee_name():
     if not employee:
         return jsonify({"msg": "Użytkownik nie znaleziony"}), 404
 
-    return jsonify({"employeename": employee.name}), 200
+    return jsonify({"employeename": employee.name, "employeeposition": employee.position}), 200
