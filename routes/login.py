@@ -5,6 +5,7 @@ from models.employees import Employee
 from flask_jwt_extended import create_access_token
 from datetime import timedelta
 
+
 login_bp = Blueprint('login_bp', __name__, url_prefix='/api')
 
 
@@ -20,7 +21,7 @@ def login():
 
     restaurant = Restaurant.query.filter_by(email=identifier).first()
     if restaurant and check_password_hash(restaurant.password_hash, password):
-        additional_claims = {"restaurant_id": restaurant.id}
+        additional_claims = {"userType": "restaurant", "restaurant_id": restaurant.id}
         access_token = create_access_token(identity=restaurant.id, additional_claims=additional_claims,
                                            expires_delta=timedelta(days=1))
         return jsonify(
@@ -33,7 +34,7 @@ def login():
 
     employee = Employee.query.filter_by(login=identifier).first()
     if employee and check_password_hash(employee.password_hash, password):
-        additional_claims = {"employee_id": employee.employee_id}
+        additional_claims = {"userType": "employee", "employee_id": employee.employee_id}
         access_token = create_access_token(identity=employee.employee_id, additional_claims=additional_claims,
                                            expires_delta=timedelta(days=1))
         return jsonify(
