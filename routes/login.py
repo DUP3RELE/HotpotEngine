@@ -41,6 +41,7 @@ def login():
             {
                 'access_token': access_token,
                 'employee_id': employee.employee_id,
+                'restaurant_id': employee.restaurant_id,
                 'userType': 'employee',
                 'message': 'Login successful'
             }), 200

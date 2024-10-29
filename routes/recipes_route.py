@@ -17,6 +17,7 @@ def create_recipe():
     content_methods = data.get('content_methods')
     date_added = datetime.now(timezone.utc)
     employee_id = data.get('employee_id')
+    editor_name = data.get('editor_name')
 
     if not restaurant_id:
         return jsonify({'message': 'Brak restaurant_id'}), 400
@@ -30,6 +31,9 @@ def create_recipe():
     if not content_methods:
         return jsonify({'message': 'Brak metod'}), 400
 
+    if not editor_name:
+        return jsonify({'message': 'brak nazywy edytora'}), 400
+
     existing_recipe = Recipes.query.filter_by(title=title).first()
     if existing_recipe:
         return jsonify({'message': 'Przepis o danym tytule już istnieje'}), 400
@@ -40,7 +44,8 @@ def create_recipe():
         content_ingredients=content_ingredients,
         content_methods=content_methods,
         date_added=date_added,
-        employee_id=employee_id
+        employee_id=employee_id,
+        editor_name=editor_name
     )
 
     db.session.add(new_recipe)
@@ -62,7 +67,8 @@ def get_recipes():
                      'content_ingredients': rec.content_ingredients,
                      'content_methods': rec.content_methods,
                      'date_added': rec.date_added,
-                     'employee_id': rec.employee_id} for rec in recipes]
+                     'employee_id': rec.employee_id,
+                     'editor_name': rec.editor_name} for rec in recipes]
 
     return jsonify(recipes_list), 200
 
