@@ -86,6 +86,7 @@ def edit_recipes(recipe_id):
     recipe.content_methods = data.get('content_methods', recipe.content_methods)
     recipe.employee_id = data.get('employee_id', recipe.employee_id)
     recipe.date_added = datetime.now(timezone.utc)
+    recipe.editor_name = data.get('editor_name', recipe.editor_name)
 
     db.session.commit()
     return jsonify({'message': 'Przepis został zaktualizowany'}), 200
